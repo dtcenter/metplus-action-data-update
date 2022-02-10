@@ -83,7 +83,7 @@ None.
   with:
     docker_name: ${{ secrets.DOCKER_USERNAME }}
     docker_pass: ${{ secrets.DOCKER_PASSWORD }}
-    repo_name: $${{ github.repository }}
+    repo_name: ${{ github.repository }}
     data_prefix: unit_test
     branch_name: ${{ needs.job_control.outputs.branch_name }}
     docker_data_dir: /data/input/MET_test_data/unit_test
@@ -96,7 +96,7 @@ None.
   with:
     docker_name: ${{ secrets.DOCKER_USERNAME }}
     docker_pass: ${{ secrets.DOCKER_PASSWORD }}
-    repo_name: $${{ github.repository }}
+    repo_name: ${{ github.repository }}
     data_prefix: sample_data
     branch_name: ${{ needs.job_control.outputs.branch_name }}
     docker_data_dir: /data/input/METplus_Data
