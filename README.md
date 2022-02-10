@@ -79,7 +79,7 @@ None.
 
 ### MET
 ```
-- uses: actions/metplus-action-data-update@v1
+- uses: dtcenter/metplus-action-data-update@v1
   with:
     docker_name: ${{ secrets.DOCKER_USERNAME }}
     docker_pass: ${{ secrets.DOCKER_PASSWORD }}
@@ -92,7 +92,7 @@ None.
 
 ### METplus
 ```
-- uses: actions/metplus-action-data-update@v1
+- uses: dtcenter/metplus-action-data-update@v1
   with:
     docker_name: ${{ secrets.DOCKER_USERNAME }}
     docker_pass: ${{ secrets.DOCKER_PASSWORD }}
