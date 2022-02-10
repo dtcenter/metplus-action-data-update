@@ -86,7 +86,7 @@ None.
     repo_name: ${{ github.repository }}
     data_prefix: unit_test
     branch_name: ${{ needs.job_control.outputs.branch_name }}
-    docker_data_dir: /data/input/MET_test_data/unit_test
+    docker_data_dir: /data/input/MET_test_data
     data_repo_dev: met-data-dev
 ```
 
