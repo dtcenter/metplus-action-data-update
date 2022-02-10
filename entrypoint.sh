@@ -6,6 +6,10 @@ if [ -z ${INPUT_DOCKER_NAME+x} ]; then
   exit 0
 fi
 
+echo Updating installed packages
+apk update
+apk upgrade
+
 echo "Logging into Docker ..."
 echo "$INPUT_DOCKER_PASS" | docker login -u "$INPUT_DOCKER_NAME" --password-stdin
 
