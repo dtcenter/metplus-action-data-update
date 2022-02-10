@@ -104,3 +104,12 @@ None.
     data_repo_stable: metplus-data
     use_feature_data: true
 ```
+
+## To recreate base Docker image used by action
+
+```
+docker build -t dtcenter/metplus-envs:metplus-action-data-update -f Dockerfile.env .
+docker push dtcenter/metplus-envs:metplus-action-data-update
+```
+
+This should be regenerated periodically to obtain any security updates.
