@@ -1,0 +1,44 @@
+name: 'Update Docker Data Volumes'
+description: 'Query web server and update data volumes used for testing'
+inputs:
+  docker_name:
+    description: 'DockerHub username'
+    required: true
+  docker_pass:
+    description: 'DockerHub password'
+    required: true
+  repo_name:
+    description: 'Directory on DTC server to search for new data for a repo'
+    required: true
+  data_prefix:
+    description: 'Prefix of tar files to search'
+    required: true
+  branch_name:
+    description: 'Name of branch that triggered logic'
+    required: true
+  docker_data_dir:
+    description: 'Path in Docker volume to put new data'
+    required: true
+  data_repo_dev:
+    description: 'DockerHub repository to push development data volumes'
+    required: true
+  data_repo_stable:
+    description: 'DockerHub repository to push data volumes for stable versions'
+    default: ''
+  use_feature_data:
+    description: 'If true, create data volumes for feature branches, otherwise use develop'
+    default: 'false'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.docker_name }}
+    - ${{ inputs.docker_pass }}
+    - ${{ inputs.repo_name }}
+    - ${{ inputs.data_prefix }}
+    - ${{ inputs.branch_name }}
+    - ${{ inputs.docker_data_dir }}
+    - ${{ inputs.data_repo_dev }}
+    - ${{ inputs.data_repo_stable }}
+    - ${{ inputs.use_feature_data }}
