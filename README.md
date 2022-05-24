@@ -73,7 +73,9 @@ data.
 
 ## Outputs
 
-None.
+## `data_volumes`
+
+Comma-separated list of data volumes associated with branch_name
 
 ## Example usage
 

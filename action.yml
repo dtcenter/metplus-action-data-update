@@ -28,6 +28,9 @@ inputs:
   use_feature_data:
     description: 'If true, create data volumes for feature branches, otherwise use develop'
     default: 'false'
+outputs:
+  data_volumes:
+    description: 'Docker data volumes associated with current branch (comma-separated list)'
 
 runs:
   using: 'docker'
