@@ -2,6 +2,16 @@
 
 Query web server and update data volumes used for testing.
 
+## History
+
+### v2 (20221213)
+
+* Added optional argument `tag_max_pages`
+
+### v1
+
+* Initial version
+
 ## Inputs - Required
 
 ## `docker_name`
@@ -73,7 +83,9 @@ data.
 
 ## `tag_max_pages`
 
-Maximum number of pages of DockerHub tags to search. Defaults to 20.
+Maximum number of pages of DockerHub tags to search.
+Must be an integer.
+Defaults to 20.
 
 ## Outputs
 
@@ -96,7 +108,7 @@ None.
 
 ### METplus
 ```
-- uses: dtcenter/metplus-action-data-update@v1
+- uses: dtcenter/metplus-action-data-update@v2
   with:
     docker_name: ${{ secrets.DOCKER_USERNAME }}
     docker_pass: ${{ secrets.DOCKER_PASSWORD }}
@@ -107,6 +119,7 @@ None.
     data_repo_dev: metplus-data-dev
     data_repo_stable: metplus-data
     use_feature_data: true
+    tag_max_pages: 15
 ```
 
 ## To recreate base Docker image used by action
