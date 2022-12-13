@@ -28,6 +28,9 @@ inputs:
   use_feature_data:
     description: 'If true, create data volumes for feature branches, otherwise use develop'
     default: 'false'
+  tag_max_pages:
+    description: 'Maximum number of pages of DockerHub tags to search'
+    default: 20
 
 runs:
   using: 'docker'
@@ -42,3 +45,4 @@ runs:
     - ${{ inputs.data_repo_dev }}
     - ${{ inputs.data_repo_stable }}
     - ${{ inputs.use_feature_data }}
+    - ${{ inputs.tag_max_pages }}

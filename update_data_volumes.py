@@ -13,8 +13,6 @@ import subprocess
 # URL containing test data directories
 WEB_DATA_DIR = 'https://dtcenter.ucar.edu/dfiles/code/METplus/test_data/'
 
-# number of pages to check for existing tags
-DOCKERHUB_TAG_PAGES = 20
 
 def get_branch_name():
     branch_name = os.environ['INPUT_BRANCH_NAME']
@@ -113,7 +111,9 @@ def docker_get_volumes_last_updated(data_version, data_repo):
     volumes_last_updated = {}
     attempts = 0
     page = dockerhub_request.json()
-    while attempts < DOCKERHUB_TAG_PAGES:
+    max_pages = int(os.environ['INPUT_TAG_MAX_PAGES'])
+    print(f'Searching through maximum {max_pages} pages')
+    while attempts < max_pages:
         results = page['results']
         for tag in results:
             tag_name = tag['name']
@@ -251,6 +251,14 @@ def create_data_volumes(volumes_to_create, search_url, data_repo,
 
 def main():
     print(f"******\nRunning {__file__}\n*****\n")
+
+    # ensure tag_max_pages action argument is an integer
+    try:
+        int(os.environ['INPUT_TAG_MAX_PAGES'])
+    except ValueError:
+        print('ERROR: Invalid value for tag_max_pages')
+        sys.exit(1)
+
     branch_name = get_branch_name()
 
     data_repo, data_version = get_data_info(branch_name)

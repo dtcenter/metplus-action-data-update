@@ -71,6 +71,10 @@ This is done to ensure that the data fits the criteria before adding it to
 the official sample dataset and to avoid corrupting or losing the existing
 data.
 
+## `tag_max_pages`
+
+Maximum number of pages of DockerHub tags to search. Defaults to 20.
+
 ## Outputs
 
 None.
