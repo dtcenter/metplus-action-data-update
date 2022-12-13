@@ -102,7 +102,7 @@ def get_tarfile_last_modified(search_url):
 
 def docker_get_volumes_last_updated(data_version, data_repo):
     dockerhub_url = ('https://hub.docker.com/v2/repositories/'
-                     f'dtcenter/{data_repo}/tags')
+                     f'dtcenter/{data_repo}/tags?name={data_version}')
     print(f'\nLooking for tags that start with "{data_version}"\n'
           f'in {dockerhub_url}')
     dockerhub_request = requests.get(dockerhub_url)
