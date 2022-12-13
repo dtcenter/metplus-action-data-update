@@ -13,6 +13,8 @@ import subprocess
 # URL containing test data directories
 WEB_DATA_DIR = 'https://dtcenter.ucar.edu/dfiles/code/METplus/test_data/'
 
+# number of pages to check for existing tags
+DOCKERHUB_TAG_PAGES = 20
 
 def get_branch_name():
     branch_name = os.environ['INPUT_BRANCH_NAME']
@@ -111,7 +113,7 @@ def docker_get_volumes_last_updated(data_version, data_repo):
     volumes_last_updated = {}
     attempts = 0
     page = dockerhub_request.json()
-    while attempts < 10:
+    while attempts < DOCKERHUB_TAG_PAGES:
         results = page['results']
         for tag in results:
             tag_name = tag['name']
