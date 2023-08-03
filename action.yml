@@ -32,6 +32,10 @@ inputs:
     description: 'Maximum number of pages of DockerHub tags to search'
     default: 20
 
+outputs:
+  data_volumes:
+    description: 'Docker data volumes associated with current branch (comma-separated list)'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'

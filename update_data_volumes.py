@@ -280,6 +280,11 @@ def main():
                         data_repo,
                         data_version)
 
+    # write list of data volumes associated with branch to file
+    print('Writing list of data volumes to /data_volumes.txt')
+    with open('/data_volumes.txt', 'w') as file_handle:
+        file_handle.write(','.join(volumes_last_updated))
+
     print(f"Success: {__file__}")
 
 if __name__ == "__main__":
