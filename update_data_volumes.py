@@ -226,8 +226,8 @@ def create_data_volumes(volumes_to_create, search_url, data_repo,
             is_ok = False
             continue
 
-        # remove image to free disk space
-        cmd = f'docker rmi dtcenter/{data_repo}:{docker_tag}'
+        # prune docker images to free disk space
+        cmd = f'docker image prune -af'
         if not run_docker_command(cmd):
             is_ok = False
             continue
