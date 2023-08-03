@@ -4,11 +4,11 @@ import sys
 import os
 import time
 import shlex
-import requests
+import subprocess
+from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 import dateutil.parser
-from urllib.parse import urljoin
-import subprocess
+import requests
 
 # URL containing test data directories
 WEB_DATA_DIR = 'https://dtcenter.ucar.edu/dfiles/code/METplus/test_data/'
@@ -210,44 +210,45 @@ def create_data_volumes(volumes_to_create, search_url, data_repo,
         docker_tag = f'{data_version}-{volume}'
         mount_pt = os.path.join(data_dir, mount_dict[volume]).rstrip('/')
 
+        # build image
         cmd = (f'docker build -t dtcenter/{data_repo}:{docker_tag}'
                f' -f /docker/Dockerfile.data /docker'
                f' --build-arg TARFILE_URL={search_url}{tarfile}'
                f' --build-arg MOUNTPT={mount_pt}'
                f' --build-arg DATA_DIR={data_dir}')
-        print(f'\nRunning command: {cmd}')
-
-        start_time = time.time()
-        try:
-            subprocess.run(shlex.split(cmd), check=True)
-        except subprocess.CalledProcessError as err:
-            print(f"ERROR: Docker Build failed: {cmd} -- {err}")
+        if not run_docker_command(cmd):
             is_ok = False
             continue
 
-        end_time = time.time()
-        print("TIMING: Command took "
-              f"{time.strftime('%M:%S', time.gmtime(end_time - start_time))}"
-              f" (MM:SS): '{cmd}')")
-
+        # push image to DockerHub
         cmd = f'docker push dtcenter/{data_repo}:{docker_tag}'
-        print(f'\nRunning command: {cmd}')
-        start_time = time.time()
-        try:
-            subprocess.run(shlex.split(cmd), check=True)
-        except subprocess.CalledProcessError as err:
-            print(f"ERROR: Docker Push failed: {cmd} -- {err}")
+        if not run_docker_command(cmd):
             is_ok = False
             continue
 
-        end_time = time.time()
-        print("TIMING: Command took "
-              f"{time.strftime('%M:%S', time.gmtime(end_time - start_time))}"
-              f" (MM:SS): '{cmd}')")
+        # remove image to free disk space
+        cmd = f'docker rmi dtcenter/{data_repo}:{docker_tag}'
+        if not run_docker_command(cmd):
+            is_ok = False
+            continue
 
     if not is_ok:
         sys.exit(1)
 
+def run_docker_command(cmd):
+    print(f'\nRunning command: {cmd}')
+    start_time = time.time()
+    try:
+        subprocess.run(shlex.split(cmd), check=True)
+    except subprocess.CalledProcessError as err:
+        print(f"ERROR: Command failed: {cmd} -- {err}")
+        return False
+
+    end_time = time.time()
+    print("TIMING: Command took "
+          f"{time.strftime('%M:%S', time.gmtime(end_time - start_time))}"
+          f" (MM:SS): '{cmd}')")
+    return True
 
 def main():
     print(f"******\nRunning {__file__}\n*****\n")
