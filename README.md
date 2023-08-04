@@ -4,6 +4,11 @@ Query web server and update data volumes used for testing.
 
 ## History
 
+### v3 (20230804)
+
+* Added output variable `data_volumes`
+* Fixed bug that caused the disk to fill when creating many data volumes
+
 ### v2 (20221213)
 
 * Added optional argument `tag_max_pages`
@@ -97,7 +102,7 @@ Comma-separated list of data volumes associated with branch_name
 
 ### MET
 ```
-- uses: dtcenter/metplus-action-data-update@v1
+- uses: dtcenter/metplus-action-data-update@v3
   with:
     docker_name: ${{ secrets.DOCKER_USERNAME }}
     docker_pass: ${{ secrets.DOCKER_PASSWORD }}
@@ -110,7 +115,7 @@ Comma-separated list of data volumes associated with branch_name
 
 ### METplus
 ```
-- uses: dtcenter/metplus-action-data-update@v2
+- uses: dtcenter/metplus-action-data-update@v3
   with:
     docker_name: ${{ secrets.DOCKER_USERNAME }}
     docker_pass: ${{ secrets.DOCKER_PASSWORD }}
