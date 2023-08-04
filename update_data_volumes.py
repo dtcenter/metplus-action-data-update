@@ -281,7 +281,7 @@ def main():
                         data_version)
 
     # write list of data volumes associated with branch to file
-    print(f'Writing list of data volumes to /data_volumes.txt: {volumes_last_updated}')
+    print('Writing list of data volumes to /data_volumes.txt')
     with open('/data_volumes.txt', 'w') as file_handle:
         file_handle.write(','.join(volumes_last_updated))
 
