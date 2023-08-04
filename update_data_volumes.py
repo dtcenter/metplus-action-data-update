@@ -169,7 +169,6 @@ def compare_tarfiles_to_volumes(data_version, tarfile_last_modified,
 
     if not volumes_to_create:
         print("\nNo data volumes need to be created")
-        sys.exit(0)
 
     return volumes_to_create
 
@@ -282,7 +281,7 @@ def main():
                         data_version)
 
     # write list of data volumes associated with branch to file
-    print('Writing list of data volumes to /data_volumes.txt')
+    print(f'Writing list of data volumes to /data_volumes.txt: {volumes_last_updated}')
     with open('/data_volumes.txt', 'w') as file_handle:
         file_handle.write(','.join(volumes_last_updated))
 
