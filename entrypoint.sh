@@ -13,7 +13,10 @@ apk upgrade
 echo "Logging into Docker ..."
 echo "$INPUT_DOCKER_PASS" | docker login -u "$INPUT_DOCKER_NAME" --password-stdin
 
-python3 /update_data_volumes.py
+if ! python3 /update_data_volumes.py; then
+  echo "ERROR: Could not update data volumes"
+  exit 1
+fi
 
 data_volumes=$(cat /data_volumes.txt)
 echo "Setting output data_volumes to: $data_volumes"
