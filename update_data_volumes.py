@@ -235,14 +235,24 @@ def create_data_volumes(volumes_to_create, search_url, data_repo,
         sys.exit(1)
 
 def run_docker_command(cmd):
-    print(f'\nRunning command: {cmd}')
+    print(f"::group::Running command: {cmd}")
     start_time = time.time()
     try:
-        subprocess.run(shlex.split(cmd), check=True)
+        result = subprocess.run(shlex.split(cmd), check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        # Print combined output if there's any
+        if result.stdout:
+            print("OUTPUT:")
+            print(result.stdout)
     except subprocess.CalledProcessError as err:
         print(f"ERROR: Command failed: {cmd} -- {err}")
+        # Print the captured combined output from the failed command
+        if err.stdout:
+            print("OUTPUT:")
+            print(err.stdout)
+        print("::endgroup::")
         return False
 
+    print("::endgroup::")
     end_time = time.time()
     print("TIMING: Command took "
           f"{time.strftime('%M:%S', time.gmtime(end_time - start_time))}"
