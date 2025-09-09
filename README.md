@@ -4,6 +4,12 @@ Query web server and update data volumes used for testing.
 
 ## History
 
+### v4 (20250909)
+
+* Return non-zero if data volumes were not created properly so calling
+  workflow will be alerted of failure
+* Updated Dockerfile to remove use of deprecated LABEL syntax
+
 ### v3 (20230804)
 
 * Added output variable `data_volumes`
