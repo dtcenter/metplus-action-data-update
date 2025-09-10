@@ -4,6 +4,10 @@ Query web server and update data volumes used for testing.
 
 ## History
 
+### v5 (20250910)
+
+* Change base image from `centos:7` to `debian:12-slim`
+
 ### v4 (20250909)
 
 * Return non-zero if data volumes were not created properly so calling

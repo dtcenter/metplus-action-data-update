@@ -1,4 +1,4 @@
-FROM centos:7
+FROM debian:12-slim
 LABEL maintainer="George McCabe <mccabe@ucar.edu>"
 
 # Required arguments
@@ -6,28 +6,25 @@ ARG TARFILE_URL
 ARG MOUNTPT
 ARG DATA_DIR
 
-# Check that TARFILE_URL is defined.
-RUN if [ "x${TARFILE_URL}" == "x" ]; then \
+# install curl and tar
+# Check that TARFILE_URL, MOUNTPT, and DATA_DIR are defined.
+RUN apt-get update && apt-get install -y curl tar && apt-get clean &&\
+    if [ "x${TARFILE_URL}" == "x" ]; then \
       echo "ERROR: TARFILE_URL undefined! Rebuild with \"--build-arg TARFILE_URL={One or more URL's}\""; \
       exit 1; \
-    fi
-
-# Check that MOUNTPT is defined.
-RUN if [ "x${MOUNTPT}" == "x" ]; then \
+    fi &&\
+    if [ "x${MOUNTPT}" == "x" ]; then \
       echo "ERROR: MOUNTPT undefined! Rebuild with \"--build-arg MOUNTPT={VOLUME mount directory}\""; \
       exit 1; \
-    fi
-
-# Check that DATA_DIR is defined.
-RUN if [ "x${DATA_DIR}" == "x" ]; then \
+    fi &&\
+    if [ "x${DATA_DIR}" == "x" ]; then \
       echo "ERROR: DATA_DIR undefined! Rebuild with \"--build-arg DATA_DIR={directory to put data}\""; \
       exit 1; \
     fi
 
 ENV CASE_DIR=${DATA_DIR}
-RUN mkdir -p ${CASE_DIR}
-
-RUN for URL in `echo ${TARFILE_URL} | tr "," " "`; do \
+RUN mkdir -p ${CASE_DIR} &&\
+    for URL in `echo ${TARFILE_URL} | tr "," " "`; do \
       echo "Downloading: ${URL}"; \
       curl -SL ${URL} | tar -xzC ${CASE_DIR}; \
     done
