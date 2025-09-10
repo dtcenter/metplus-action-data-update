@@ -8,19 +8,10 @@ ARG DATA_DIR
 
 # install curl and tar
 # Check that TARFILE_URL, MOUNTPT, and DATA_DIR are defined.
-RUN apt-get update && apt-get install -y curl tar && apt-get clean &&\
-    if [ "x${TARFILE_URL}" == "x" ]; then \
-      echo "ERROR: TARFILE_URL undefined! Rebuild with \"--build-arg TARFILE_URL={One or more URL's}\""; \
-      exit 1; \
-    fi &&\
-    if [ "x${MOUNTPT}" == "x" ]; then \
-      echo "ERROR: MOUNTPT undefined! Rebuild with \"--build-arg MOUNTPT={VOLUME mount directory}\""; \
-      exit 1; \
-    fi &&\
-    if [ "x${DATA_DIR}" == "x" ]; then \
-      echo "ERROR: DATA_DIR undefined! Rebuild with \"--build-arg DATA_DIR={directory to put data}\""; \
-      exit 1; \
-    fi
+RUN apt-get update && apt-get install -y curl tar && apt-get clean && \
+    : "${TARFILE_URL:?ERROR: TARFILE_URL undefined! Rebuild with \"--build-arg TARFILE_URL={One or more URL's}\"}" && \
+    : "${MOUNTPT:?ERROR: MOUNTPT undefined! Rebuild with \"--build-arg MOUNTPT={VOLUME mount directory}\"}" && \
+    : "${DATA_DIR:?ERROR: DATA_DIR undefined! Rebuild with \"--build-arg DATA_DIR={directory to put data}\"}"
 
 ENV CASE_DIR=${DATA_DIR}
 RUN mkdir -p ${CASE_DIR} &&\
