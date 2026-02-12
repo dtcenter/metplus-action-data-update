@@ -4,6 +4,10 @@ Query web server and update data volumes used for testing.
 
 ## History
 
+### v6 (20260212)
+
+* Exit with non-zero status if URL cannot be reached
+
 ### v5 (20250910)
 
 * Change base image from `centos:7` to `debian:12-slim`
