@@ -18,6 +18,10 @@ if ! python3 /update_data_volumes.py; then
   exit 1
 fi
 
-data_volumes=$(cat /data_volumes.txt)
-echo "Setting output data_volumes to: $data_volumes"
-echo "data_volumes=$data_volumes" >> $GITHUB_OUTPUT
+if [ -f "/data_volumes.txt" ]; then
+  data_volumes=$(cat /data_volumes.txt)
+  echo "Setting output data_volumes to: $data_volumes"
+  echo "data_volumes=$data_volumes" >> $GITHUB_OUTPUT
+else
+  echo "/data_volumes.txt was not generated"
+fi
