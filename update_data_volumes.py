@@ -69,7 +69,7 @@ def get_tarfile_last_modified(search_url):
     # if it does not exist, exit script
     if dir_request.status_code != 200:
         print(f'\nURL does not exist: {search_url}\nExiting...')
-        sys.exit(0)
+        sys.exit(1)
 
     # get list of tar files from website
     soup = BeautifulSoup(requests.get(search_url).content,
