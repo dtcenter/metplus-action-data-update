@@ -5,6 +5,7 @@ import os
 import time
 import shlex
 import subprocess
+import re
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 import dateutil.parser
@@ -68,8 +69,17 @@ def get_tarfile_last_modified(search_url):
 
     # if it does not exist, exit script
     if dir_request.status_code != 200:
-        print(f'\nURL does not exist: {search_url}\nExiting...')
-        sys.exit(1)
+        print(f'\nURL does not exist: {search_url}')
+        version_dir = search_url.split('/')[-2]
+        # exit failure if develop or vX.Y URL does not exist,
+        # because this could be a sign of a bigger issue with the server
+        if version_dir == 'develop' or bool(re.match(r'v\d+\.\d+', version_dir)):
+            print(f'ERROR: {version_dir} directory should exist. Please check the URL.')
+            sys.exit(1)
+
+        # exit success because a development branch directory is likely to not exist if no new data is being added
+        print('Exiting...')
+        sys.exit(0)
 
     # get list of tar files from website
     soup = BeautifulSoup(requests.get(search_url).content,

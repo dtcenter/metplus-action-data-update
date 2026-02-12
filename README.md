@@ -6,7 +6,7 @@ Query web server and update data volumes used for testing.
 
 ### v6 (20260212)
 
-* Exit with non-zero status if URL cannot be reached
+* Exit with non-zero status if develop or vX.Y URL cannot be reached
 
 ### v5 (20250910)
 
@@ -116,7 +116,7 @@ Comma-separated list of data volumes associated with branch_name
 
 ### MET
 ```
-- uses: dtcenter/metplus-action-data-update@v3
+- uses: dtcenter/metplus-action-data-update@v6
   with:
     docker_name: ${{ secrets.DOCKER_USERNAME }}
     docker_pass: ${{ secrets.DOCKER_PASSWORD }}
@@ -129,7 +129,7 @@ Comma-separated list of data volumes associated with branch_name
 
 ### METplus
 ```
-- uses: dtcenter/metplus-action-data-update@v3
+- uses: dtcenter/metplus-action-data-update@v6
   with:
     docker_name: ${{ secrets.DOCKER_USERNAME }}
     docker_pass: ${{ secrets.DOCKER_PASSWORD }}
